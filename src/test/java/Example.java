@@ -28,7 +28,7 @@ public class Example {
 
     @Test
     @DisplayName("Авторизация")
-    void test() throws InterruptedException {
+    void test() {
         log.debug("Открываем сайт");
         driver.get(url);
         Assertions.assertEquals(url, "https://mail.ru/");
@@ -55,11 +55,11 @@ public class Example {
 
         log.info("Проверяем что находимся на входящих сообщениях");
         WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@data-parent=\"true\"]")));
-       // wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@data-parent=\"true\"]")));
+
         Assertions.assertNotNull(element.getText());
 
 
-       // WebElement element1 = driver.findElement(By.xpath("//a[@data-uidl-id='16226367891678813193']"));
+
         WebElement element1 = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[@data-uidl-id='16226367891678813193']")));
 
 

@@ -2,3 +2,9 @@
 /.gradle/
 /build/
 /build/classes/java/test/
+.idea/
+target/
+screenshots/
+*.class
+*.iml
+*.log

@@ -3,7 +3,6 @@ import org.apache.logging.log4j.*;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.*;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -31,6 +30,7 @@ public class Example {
     void test() {
         log.debug("Открываем сайт");
         driver.get(url);
+        log.debug("Проверяем что находимся на этом сайте");
         Assertions.assertEquals(url, "https://mail.ru/");
         log.debug("Открыли сайт");
 
@@ -72,7 +72,7 @@ public class Example {
         search.click();
         log.info("Открывается под меню");
 
-        log.info("Жму кнопку отписаться и удалить");
+        log.info("Нахожу кнопку отписаться и удалить");
         WebElement delete = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@type=\"submit\"]")));
         delete.click();
         log.info("Жму кнопку отписаться и удалить");
@@ -82,6 +82,10 @@ public class Example {
       //  System.out.println(element.getText());
 
 
+    }
+    @AfterAll
+    static void exitUp(){
+        driver.close();
     }
 
 

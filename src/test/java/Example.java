@@ -59,16 +59,27 @@ public class Example {
         Assertions.assertNotNull(element.getText());
 
 
-
+        log.info("Кликаем на первое письмо");
         WebElement element1 = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[@data-uidl-id='16226367891678813193']")));
+        element1.click();
+        log.info("Провалеваемся в него");
 
 
-        Actions oAction = new Actions(driver);
-        oAction.contextClick(element1).sendKeys(Keys.ARROW_DOWN)
-                .sendKeys(Keys.ARROW_DOWN)
-                .sendKeys(Keys.ARROW_DOWN).perform();
+        log.info("Жму кнопку отписаться от рассылки");
+        WebElement search = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[@class=\"button2 button2_has-ico " +
+                "button2_has-ico-s button2_status_block " +
+                "button2_clean button2_hover-support\"]")));
+        search.click();
+        log.info("Открывается под меню");
+
+        log.info("Жму кнопку отписаться и удалить");
+        WebElement delete = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@type=\"submit\"]")));
+        delete.click();
+        log.info("Жму кнопку отписаться и удалить");
+
         driver.navigate().back();
 
+      //  System.out.println(element.getText());
 
 
     }

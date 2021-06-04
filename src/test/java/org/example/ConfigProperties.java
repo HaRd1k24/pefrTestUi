@@ -9,7 +9,6 @@ public class ConfigProperties {
     protected static Properties property;
     static {
         try {
-            //указание пути до файла с настройками
             fileInputStream = new FileInputStream("src/test/resources/config.properties");
             property = new Properties();
             property.load(fileInputStream);

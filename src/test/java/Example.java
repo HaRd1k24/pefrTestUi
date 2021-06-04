@@ -33,7 +33,7 @@ public class Example {
 
         driver.get(ConfigProperties.getProperty("db.url"));
         log.debug("Проверяем что находимся на этом сайте");
-        Assertions.assertEquals("https://mail.ru/", "https://mail.ru/");
+        Assertions.assertEquals(ConfigProperties.getProperty("db.url"), "https://mail.ru/");
         log.debug("Открыли сайт");
     }
 

@@ -6,13 +6,13 @@ import java.util.Properties;
 
 public class ConfigProperties {
     protected static FileInputStream fileInputStream;
-    protected static Properties PROPERTIES;
+    protected static Properties property;
     static {
         try {
             //указание пути до файла с настройками
             fileInputStream = new FileInputStream("src/test/resources/config.properties");
-            PROPERTIES = new Properties();
-            PROPERTIES.load(fileInputStream);
+            property = new Properties();
+            property.load(fileInputStream);
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -25,5 +25,5 @@ public class ConfigProperties {
      * метод для возврата строки со значением из файла с настройками
      */
     public static String getProperty(String key) {
-        return PROPERTIES.getProperty(key); } }
+        return property.getProperty(key); } }
 

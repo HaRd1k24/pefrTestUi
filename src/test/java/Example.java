@@ -1,18 +1,22 @@
-
-import org.apache.logging.log4j.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.example.ConfigProperties;
 import org.junit.jupiter.api.*;
-import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.*;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import page.AuthPage;
+import page.InsideLetterPage;
+import page.MainPage;
+
 
 public class Example {
-    private static final String url = "https://mail.ru/";
-    private static final String Login = "lev-trapeznikov";
-    private static final String Password = "Le12345678";
+
     static WebDriver driver;
-    static WebDriverWait wait;
     private static final Logger log = LogManager.getRootLogger();
+    static MainPage mainPage;
+    static AuthPage authPage;
+    static InsideLetterPage insideLetterPage;
 
     @BeforeAll
     static void setUp() {
@@ -21,73 +25,47 @@ public class Example {
         System.setProperty("webdriver.chrome.driver", "bin/chromedriver.exe");
 
         driver = new ChromeDriver(options);
-        wait = new WebDriverWait(driver, 10,200);
         driver.manage().window().maximize();
+
+        mainPage = new MainPage(driver);
+        authPage = new AuthPage(driver);
+        insideLetterPage = new InsideLetterPage(driver);
+
+        driver.get(ConfigProperties.getProperty("db.url"));
+        log.debug("Проверяем что находимся на этом сайте");
+        Assertions.assertEquals("https://mail.ru/", "https://mail.ru/");
+        log.debug("Открыли сайт");
+    }
+
+    @Test()
+    @DisplayName("Авторизация")
+    void test() {
+        mainPage.fieldLogin(ConfigProperties.getProperty("db.login"));
+        mainPage.acceptLogin();
+        mainPage.fieldPassword(ConfigProperties.getProperty("db.password"));
+        mainPage.acceptPassword();
+
     }
 
     @Test
-    @DisplayName("Авторизация")
-    void test() {
-        log.debug("Открываем сайт");
-        driver.get(url);
-        log.debug("Проверяем что находимся на этом сайте");
-        Assertions.assertEquals(url, "https://mail.ru/");
-        log.debug("Открыли сайт");
-
-        log.info("Воддим логин ");
-        WebElement login = driver.findElement(By.xpath("//input[@name='login']"));
-        login.sendKeys(Login);
-
-        log.info("Кликаем и переходим на ввод пароля");
-        WebElement sumbit = driver.findElement(By.xpath("//button[@data-testid='enter-password']"));
-        sumbit.click();
-
-        log.info("Вводим пароль");
-        WebElement password = driver.findElement(By.xpath("//input[@type='password']"));
-        password.sendKeys(Password);
-
-        log.info("Заходим в майл");
-        WebElement toOpen = driver.findElement(By.xpath("//button[@data-testid='login-to-mail']"));
-        toOpen.click();
-        log.info("Зашли и перекидывает на входящие сообщения");
-
-
-
-        log.info("Проверяем что находимся на входящих сообщениях");
-        WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@data-parent=\"true\"]")));
-
-        Assertions.assertNotNull(element.getText());
-
-
-        log.info("Кликаем на первое письмо");
-        WebElement element1 = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[@data-uidl-id='16226367891678813193']")));
-        element1.click();
-        log.info("Провалеваемся в него");
-
-
-        log.info("Жму кнопку отписаться от рассылки");
-        WebElement search = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[@class=\"button2 button2_has-ico " +
-                "button2_has-ico-s button2_status_block " +
-                "button2_clean button2_hover-support\"]")));
-        search.click();
-        log.info("Открывается под меню");
-
-        log.info("Нахожу кнопку отписаться и удалить");
-        WebElement delete = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@type=\"submit\"]")));
-        delete.click();
-        log.info("Жму кнопку отписаться и удалить");
-
-        driver.navigate().back();
-
-      //  System.out.println(element.getText());
-
+    @DisplayName("Удостоверяемся что авторизировались")
+    void test2() {
+        authPage.checkResult();
 
     }
+
+    @Test
+    @DisplayName("Авторизация,подтверждение что находимся на входящих сообщениях,удаление сообщения")
+    void test3() {
+        authPage.letterClick();
+        insideLetterPage.search();
+        insideLetterPage.deleteLetter();
+
+    }
+
     @AfterAll
-    static void exitUp(){
-        driver.close();
+    static void exitUp() {
+        driver.quit();
     }
-
-
 }
 

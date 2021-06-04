@@ -48,8 +48,12 @@ public class Example {
     }
 
     @Test
-    @DisplayName("Удостоверяемся что авторизировались")
+    @DisplayName("Авторизация,удостоверяемся что авторизировались")
     void test2() {
+        mainPage.fieldLogin(ConfigProperties.getProperty("db.login"));
+        mainPage.acceptLogin();
+        mainPage.fieldPassword(ConfigProperties.getProperty("db.password"));
+        mainPage.acceptPassword();
         authPage.checkResult();
 
     }
@@ -57,6 +61,11 @@ public class Example {
     @Test
     @DisplayName("Авторизация,подтверждение что находимся на входящих сообщениях,удаление сообщения")
     void test3() {
+        mainPage.fieldLogin(ConfigProperties.getProperty("db.login"));
+        mainPage.acceptLogin();
+        mainPage.fieldPassword(ConfigProperties.getProperty("db.password"));
+        mainPage.acceptPassword();
+        authPage.checkResult();
         authPage.letterClick();
         insideLetterPage.search();
         insideLetterPage.deleteLetter();

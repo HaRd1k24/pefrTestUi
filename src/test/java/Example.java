@@ -18,8 +18,8 @@ public class Example {
     static AuthPage authPage;
     static InsideLetterPage insideLetterPage;
 
-    @BeforeAll
-    static void setUp() {
+    @BeforeEach
+    void setUp() {
         ChromeOptions options = new ChromeOptions();
         options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
         System.setProperty("webdriver.chrome.driver", "bin/chromedriver.exe");
@@ -72,9 +72,9 @@ public class Example {
 
     }
 
-    @AfterAll
-    static void exitUp() {
-        driver.quit();
+    @AfterEach
+    void exit() {
+        driver.close();
     }
 }
 

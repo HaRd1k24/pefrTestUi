@@ -24,5 +24,7 @@ public class ConfigProperties {
      * метод для возврата строки со значением из файла с настройками
      */
     public static String getProperty(String key) {
-        return property.getProperty(key); } }
+        return property.getProperty(key);
+    }
+}
 

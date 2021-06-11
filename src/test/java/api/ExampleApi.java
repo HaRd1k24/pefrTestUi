@@ -24,7 +24,10 @@ public class ExampleApi {
         ChromeOptions options = new ChromeOptions();
         options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
         System.setProperty("webdriver.chrome.driver", "bin/chromedriver.exe");
+
+        driver.manage().window().maximize();
         driver = new ChromeDriver(options);
+
         mainPage = new MainPage(driver);
 
 

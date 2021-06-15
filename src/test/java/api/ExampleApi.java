@@ -24,7 +24,7 @@ public class ExampleApi {
         map.put("login", "lev-trapeznikov@mail.ru");
         map.put("password", "Eaa4HPpOyu2%");
 
-        given().cookies(cookies).cookies(cookies).when().post("https://mail.ru").then().log().all();
+        given().cookies(cookies).when().post("https://mail.ru").then().log().all();
 
     }
 

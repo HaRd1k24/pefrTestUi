@@ -1,7 +1,10 @@
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.example.ConfigProperties;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -45,6 +48,7 @@ public class Example {
         mainPage.fieldPassword(ConfigProperties.getProperty("db.password"));
         mainPage.acceptPassword();
 
+
     }
 
     @Test
@@ -70,11 +74,12 @@ public class Example {
         insideLetterPage.search();
         insideLetterPage.deleteLetter();
 
+
     }
 
-    @AfterEach
+    /*@AfterEach
     void exit() {
         driver.close();
-    }
+    }*/
 }
 
